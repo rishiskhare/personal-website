@@ -16,12 +16,12 @@ export default function About({ scrollY }: AboutProps) {
         <h2 className="text-3xl font-bold mb-8">About Me</h2>
         <p className="text-lg mb-6 font-light">
           I&apos;m a passionate Computer Science and Data Science student at UC Berkeley, with a keen interest in machine
-          learning, AI safety, and fullstack development. My journey in tech has led me to exciting opportunities in
+          learning and AI security. My journey in tech has led me to exciting opportunities in
           research, internships, and project development.
         </p>
         <p className="text-lg font-light">
-          When I&apos;m not coding, you can find me volunteering, solving algorithmic problems, or working on innovative
-          projects that push the boundaries of technology.
+          When I&apos;m not coding, you can find me volunteering, solving Rubik&apos;s cubes and algorithmic problems, or tinkering on innovative
+          projects that excite me to create.
         </p>
       </motion.div>
     </section>
