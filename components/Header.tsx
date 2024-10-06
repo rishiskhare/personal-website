@@ -22,7 +22,7 @@ export default function Header({ isDarkMode, toggleDarkMode }: HeaderProps) {
             <li key={item}>
               <button
                 onClick={() => scrollTo(item)}
-                className={`hover:text-gray-500 transition-colors capitalize text-sm font-medium ${isDarkMode ? 'text-white' : 'text-black'}`}
+                className={`hover:text-gray-500 transition-colors capitalize font-light text-medium ${isDarkMode ? 'text-white' : 'text-black'}`}
               >
                 {item}
               </button>

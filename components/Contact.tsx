@@ -18,7 +18,7 @@ export default function Contact({ scrollY, isDarkMode }: ContactProps) {
         <p className="text-lg mb-4 font-light">
           Feel free to reach out if you&apos;re looking for a developer, have a question, or just want to connect.
         </p>
-        <p className="mb-8">
+        <p className="text-lg mb-8 font-light">
           Don&apos;t hesitate to reach out if you&apos;d like to connect!
         </p>
         <a
