@@ -1,10 +1,12 @@
-import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
-import Image from 'next/image'
+import { useEffect, useRef } from 'react'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import Image from 'next/image';
 
 interface HeroProps {
   isDarkMode: boolean
 }
+
 
 export default function Hero({ isDarkMode }: HeroProps) {
   const scrollTo = (id: string) => {
@@ -13,15 +15,177 @@ export default function Hero({ isDarkMode }: HeroProps) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
   }
+  
+  const mountRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!mountRef.current) return
+
+    // Set up the scene
+    const scene = new THREE.Scene()
+    scene.background = new THREE.Color(isDarkMode ? 0x000000 : 0xffffff)
+
+    // Set up the camera
+    const camera = new THREE.PerspectiveCamera(75, mountRef.current.clientWidth / mountRef.current.clientHeight, 0.1, 1000)
+    camera.position.set(0, 0, 10)
+    camera.lookAt(0, 0, 0)
+
+    // Adjust the renderer to have a transparent background
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight)
+    renderer.setClearColor(0x000000, 0) // Set clear color to transparent
+    mountRef.current.appendChild(renderer.domElement)
+
+    // Set up OrbitControls
+    const controls = new OrbitControls(camera, renderer.domElement)
+    controls.enableDamping = true
+    controls.dampingFactor = 0.05
+    controls.autoRotate = true
+    controls.autoRotateSpeed = 0.5
+    controls.enableZoom = false
+
+    // Create a group to hold all objects
+    const group = new THREE.Group()
+    scene.add(group)
+
+    // Create pyramid geometry with reduced height
+    const pyramidGeometry = new THREE.BufferGeometry()
+    const originalHeight = 0.5
+    const reducedHeight = originalHeight * 0.97 * 0.97
+    const vertices = new Float32Array([
+      -0.5, -0.5, 0.5,
+      0.5, -0.5, 0.5,
+      0, reducedHeight, 0,
+      0.5, -0.5, 0.5,
+      0.5, -0.5, -0.5,
+      0, reducedHeight, 0,
+      0.5, -0.5, -0.5,
+      -0.5, -0.5, -0.5,
+      0, reducedHeight, 0,
+      -0.5, -0.5, -0.5,
+      -0.5, -0.5, 0.5,
+      0, reducedHeight, 0,
+      -0.5, -0.5, 0.5,
+      0.5, -0.5, 0.5,
+      0.5, -0.5, -0.5,
+      -0.5, -0.5, -0.5,
+    ])
+    const indices = new Uint16Array([
+      0, 1, 2,
+      3, 4, 5,
+      6, 7, 8,
+      9, 10, 11,
+      12, 13, 14, 12, 14, 15
+    ])
+    pyramidGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+    pyramidGeometry.setIndex(new THREE.BufferAttribute(indices, 1))
+    pyramidGeometry.computeVertexNormals()
+
+    // Create material for the pyramid
+    const faceMaterial = new THREE.MeshBasicMaterial({ 
+      color: isDarkMode ? 0x000000 : 0xffffff,
+      side: THREE.DoubleSide,
+    })
+
+    // Create pyramid
+    const pyramid = new THREE.Mesh(pyramidGeometry, faceMaterial)
+    group.add(pyramid)
+
+    // Create edges for the pyramid
+    const pyramidEdges = new THREE.EdgesGeometry(pyramidGeometry)
+    const pyramidLineMaterial = new THREE.LineBasicMaterial({ color: isDarkMode ? 0xffffff : 0x000000 })
+    const pyramidWireframe = new THREE.LineSegments(pyramidEdges, pyramidLineMaterial)
+    pyramid.add(pyramidWireframe)
+
+    // Create black cubes with white outlines
+    const cubes: THREE.Mesh[] = []
+    const cubeGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2)
+    const cubeMaterial = new THREE.MeshBasicMaterial({ color: isDarkMode ? 0x000000 : 0xffffff })
+    const cubeEdges = new THREE.EdgesGeometry(cubeGeometry)
+    const cubeLineMaterial = new THREE.LineBasicMaterial({ color: isDarkMode ? 0xffffff : 0x000000 })
+
+    for (let i = 0; i < 20; i++) {
+      const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+      const cubeWireframe = new THREE.LineSegments(cubeEdges, cubeLineMaterial)
+      
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.acos(Math.random() * 2 - 1)
+      const radius = 1 + Math.random() * 2
+      
+      cube.position.x = radius * Math.sin(phi) * Math.cos(theta)
+      cube.position.y = radius * Math.sin(phi) * Math.sin(theta)
+      cube.position.z = radius * Math.cos(phi)
+      
+      cube.rotation.x = Math.random() * Math.PI
+      cube.rotation.y = Math.random() * Math.PI
+      cube.rotation.z = Math.random() * Math.PI
+      
+      cube.add(cubeWireframe)
+      group.add(cube)
+      cubes.push(cube)
+    }
+
+    // Animation variables
+    let currentZoom = 10
+    const targetZoom = 2.7
+    const zoomDuration = 2000
+    const startTime = Date.now()
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate)
+
+      // Rotate the entire group
+      group.rotation.y += 0.002
+
+      // Animate zoom
+      const elapsedTime = Date.now() - startTime
+      if (elapsedTime < zoomDuration) {
+        const progress = elapsedTime / zoomDuration
+        currentZoom = 10 - (10 - targetZoom) * easeOutCubic(progress)
+        camera.position.z = currentZoom
+      }
+
+      controls.update()
+      renderer.render(scene, camera)
+    }
+
+    // Easing function for smooth animation
+    function easeOutCubic(t: number): number {
+      return 1 - Math.pow(1 - t, 3)
+    }
+
+    // Start the animation loop
+    animate()
+
+    // Handle window resizing
+    const handleResize = () => {
+      if (!mountRef.current) return
+      const width = mountRef.current.clientWidth
+      const height = mountRef.current.clientHeight
+      renderer.setSize(width, height)
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Handle cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (mountRef.current) {
+        mountRef.current.removeChild(renderer.domElement)
+      }
+    }
+  }, [isDarkMode])
 
   return (
-    <section id="hero" className="h-screen flex items-center justify-center relative overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center z-10"
-      >
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div 
+        ref={mountRef} 
+        className="absolute inset-0 z-0"
+      />
+      <div className="relative z-10 text-center">
         <Image
           src="/images/rishi-khare-resized.png"
           alt="Rishi Khare"
@@ -29,7 +193,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
           height={200}
           className={`rounded-full mx-auto mb-8 border-4 ${isDarkMode ? 'border-white' : 'border-black'}`}
         />
-        <h1 className="text-6xl font-bold mb-4 relative">
+        <h1 className="text-6xl font-bold mb-4">
           <span className="relative z-10">Rishi Khare</span>
         </h1>
         <p className="text-xl mb-8 font-light">Computer Science & Data Science @ UC Berkeley</p>
@@ -41,66 +205,6 @@ export default function Hero({ isDarkMode }: HeroProps) {
         >
           Learn More
         </button>
-      </motion.div>
-      <div className="absolute bottom-10 transform animate-bounce">
-        <ChevronDown size={32} />
-      </div>
-      <div className="absolute inset-0 z-0">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: isDarkMode ? 'rgb(59,130,246)' : 'rgb(147,197,253)', stopOpacity: 0.1 }} />
-              <stop offset="100%" style={{ stopColor: isDarkMode ? 'rgb(147,51,234)' : 'rgb(196,181,253)', stopOpacity: 0.1 }} />
-            </linearGradient>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grad1)" />
-          <g className="wireframe-animation">
-            {[...Array(5)].map((_, i) => (
-              <motion.path
-                key={`path-${i}`}
-                d={`M${i * 25} 100 Q${i * 25 + 12.5} 0 ${i * 25 + 25} 100`}
-                stroke={isDarkMode ? 'white' : 'black'}
-                strokeWidth="0.5"
-                strokeOpacity="0.2"
-                fill="none"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 3 + i, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
-              />
-            ))}
-            {[...Array(3)].map((_, i) => (
-              <motion.circle
-                key={`circle-${i}`}
-                cx={`${33 * (i + 1)}%`}
-                cy={`${25 * (i + 1)}%`}
-                r={`${5 + i * 2}%`}
-                stroke={isDarkMode ? 'white' : 'black'}
-                strokeWidth="0.5"
-                strokeOpacity="0.2"
-                fill="none"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 2 + i, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-              />
-            ))}
-            {[...Array(2)].map((_, i) => (
-              <motion.rect
-                key={`rect-${i}`}
-                x={`${20 + i * 40}%`}
-                y={`${40 + i * 20}%`}
-                width="20%"
-                height="10%"
-                stroke={isDarkMode ? 'white' : 'black'}
-                strokeWidth="0.5"
-                strokeOpacity="0.2"
-                fill="none"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{ rotate: 360, opacity: 1 }}
-                transition={{ duration: 4 + i * 2, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
-              />
-            ))}
-          </g>
-        </svg>
       </div>
     </section>
   )
