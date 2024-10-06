@@ -13,7 +13,7 @@ import { Item, ItemType } from '../types/types'
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const [selectedItem, setSelectedItem] = useState<Item | null>(null)
   const [itemType, setItemType] = useState<ItemType | null>(null)
 
