@@ -16,7 +16,10 @@ export default function Contact({ scrollY, isDarkMode }: ContactProps) {
       >
         <h2 className="text-3xl font-bold mb-8">Get In Touch</h2>
         <p className="text-lg mb-8 font-light">
-          Feel free to reach out if you're looking for a developer, have a question, or just want to connect.
+          Feel free to reach out if you&apos;re looking for a developer, have a question, or just want to connect.
+        </p>
+        <p>
+          Don&apos;t hesitate to reach out if you&apos;d like to connect!
         </p>
         <a
           href="mailto:rishi.khare@berkeley.edu"
