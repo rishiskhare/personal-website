@@ -19,7 +19,6 @@ export const experiences: Item[] = [
     details: [
       'Developed and implemented computer vision object detection and proximity measurement methods using Intel Realsense depth cameras and OpenCV for RFID tag location detection',
       'Presented results to the VP and submitted two utility patents for RFID tag location detection systems using computer vision and audio machine learning',
-      'Implemented a RAG framework (with online evaluations) using LangGraph and created a vector database on ChromaDB for document retrieval and chat completion on network engineering and telecom standards documents (3GPP)',
       'Implemented RAFT synthetic dataset generation for RAG finetuning and deployed on internal company documents',
       'Evaluated question-answer pairs for an internal RAG system (LLM-as-a-judge approach) and improved safety guardrails',
       'Locally fine-tuned LLM models (Llama-3) for document retrieval and chat completion using NVIDIA A100 and H100 GPUs',

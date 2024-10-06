@@ -15,15 +15,15 @@ export default function Contact({ scrollY, isDarkMode }: ContactProps) {
         className="container mx-auto text-center"
       >
         <h2 className="text-3xl font-bold mb-8">Get In Touch</h2>
-        <p className="text-lg mb-8 font-light">
+        <p className="text-lg mb-4 font-light">
           Feel free to reach out if you&apos;re looking for a developer, have a question, or just want to connect.
         </p>
-        <p>
+        <p className="mb-8">
           Don&apos;t hesitate to reach out if you&apos;d like to connect!
         </p>
         <a
           href="mailto:rishi.khare@berkeley.edu"
-          className={`px-8 py-3 rounded-full font-semibold transition-colors text-sm ${
+          className={`inline-block px-8 py-3 rounded-full font-semibold transition-colors text-sm ${
             isDarkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'
           }`}
         >
