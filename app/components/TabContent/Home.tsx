@@ -21,9 +21,9 @@ interface HomeProps {
 export default function Home({ darkMode, animatedText, handleTabChange, setShowDinoGame }: HomeProps) {
   return (
     <ScrollArea className="h-full">
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-12rem)]">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-16rem)]">
         <motion.h1 
-          className="text-3xl sm:text-6xl font-bold mb-8 text-center"
+          className="text-3xl sm:text-6xl font-bold mb-12 mt-12 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

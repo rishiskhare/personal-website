@@ -163,7 +163,7 @@ export default function RetroWebsite() {
           <Projects darkMode={darkMode} />
         </TabsContent>
         <TabsContent value="chatbot" className={`flex-grow ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} text-green-400 p-4 overflow-hidden flex flex-col rounded-b-lg`}>
-          <Chatbot darkMode={darkMode} />
+          <Chatbot darkMode={darkMode} setShowBrookeDialog={setShowBrookeDialog} />
         </TabsContent>
       </Tabs>
 

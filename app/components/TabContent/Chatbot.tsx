@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button"
 
 interface ChatbotProps {
   darkMode: boolean
+  setShowBrookeDialog: (show: boolean) => void
 }
 
 const WELCOME_MESSAGE = ["Welcome to Rishi Khare's AI Chatbot.", "Type 'help' for a list of commands."]
 
-export default function Chatbot({ darkMode }: ChatbotProps) {
+export default function Chatbot({ darkMode, setShowBrookeDialog }: ChatbotProps) {
   const [terminalInput, setTerminalInput] = useState("")
   const [terminalOutput, setTerminalOutput] = useState<string[]>(WELCOME_MESSAGE)
   const [isTyping, setIsTyping] = useState(false)
@@ -32,7 +33,7 @@ export default function Chatbot({ darkMode }: ChatbotProps) {
     let response: string[] = []
     switch (command) {
       case "help":
-        response = ["Available commands:", "- about: Learn about Rishi Khare", "- education: View educational background", "- inventions: List current inventions", "- contact: Show contact information", "- clear: Clear the chat"]
+        response = ["Available commands:", "- about: Learn about Rishi Khare", "- education: View educational background", "- inventions: List current inventions", "- contact: Show contact information", "- clear: Clear the chat", "- brooke: A special surprise"]
         break
       case "about":
         response = ["Rishi Khare: Inventor, AI Researcher, and Computer Scientist", "Currently pushing the boundaries of AI and machine learning at UC Berkeley."]
@@ -51,6 +52,7 @@ export default function Chatbot({ darkMode }: ChatbotProps) {
         break
       case "brooke":
         response = ["💖 A special message for Brooke has appeared! 💖"]
+        setShowBrookeDialog(true)
         break
       case "clear":
         setTerminalOutput(WELCOME_MESSAGE)
