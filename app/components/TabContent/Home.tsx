@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Twitter, HelpCircle } from "lucide-react"
+import { Github, Linkedin, Mail, Twitter } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -57,7 +57,7 @@ export default function Home({ darkMode, animatedText, handleTabChange, setShowD
               <SelectItem value="experience">Experience</SelectItem>
               <SelectItem value="projects">Projects</SelectItem>
               <SelectItem value="chatbot">AI Chatbot</SelectItem>
-              <SelectItem value="game">Dino Game</SelectItem>
+              <SelectItem value="game">I'm feeling inventive</SelectItem>
             </SelectContent>
           </Select>
         </motion.div>
@@ -73,35 +73,31 @@ export default function Home({ darkMode, animatedText, handleTabChange, setShowD
             Currently, I&apos;m studying Computer Science and Data Science at UC Berkeley, where I&apos;m involved in cutting-edge AI research. 
             My goal is to develop innovative solutions that can positively impact the world.
           </p>
-          <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <a href="https://github.com/rishiskhare" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" className="flex items-center gap-2">
                 <Github className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
+                <span>GitHub</span>
               </Button>
             </a>
             <a href="https://linkedin.com/in/rishi-khare" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" className="flex items-center gap-2">
                 <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
+                <span>LinkedIn</span>
               </Button>
             </a>
-            <a href="https://twitter.com/rishiskhare" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon">
+            <a href="https://x.com/rishiskhare" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="flex items-center gap-2">
                 <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
+                <span>X</span>
               </Button>
             </a>
             <a href="mailto:rishi.khare@berkeley.edu">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" className="flex items-center gap-2">
                 <Mail className="h-5 w-5" />
-                <span className="sr-only">Email</span>
+                <span>Email</span>
               </Button>
             </a>
-            <Button variant="outline" size="icon" onClick={() => setShowDinoGame(true)}>
-              <HelpCircle className="h-5 w-5" />
-              <span className="sr-only">Dino Game</span>
-            </Button>
           </div>
         </motion.div>
       </div>

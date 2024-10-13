@@ -69,6 +69,7 @@ export default function DinoGame({ darkMode }: DinoGameProps) {
       ctx.fillStyle = darkMode ? '#1f2937' : '#f3f4f6'
       ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
 
+      // Update dino position
       dino.y += jumpVelocity
       jumpVelocity += GRAVITY
       if (dino.y > GAME_HEIGHT - DINO_HEIGHT) {
@@ -76,6 +77,7 @@ export default function DinoGame({ darkMode }: DinoGameProps) {
         jumpVelocity = 0
       }
 
+      // Generate new cactus
       if (frameCount % 100 === 0) {
         cacti.push({
           x: GAME_WIDTH,
@@ -85,35 +87,35 @@ export default function DinoGame({ darkMode }: DinoGameProps) {
         })
       }
 
-      cacti = cacti.filter(cactusItem => {
-        const updatedCactus = { ...cactusItem, x: cactusItem.x - 5 }
-        return updatedCactus.x > -CACTUS_WIDTH
-      })
+      // Update and draw cacti
+      cacti = cacti.filter(cactus => {
+        cactus.x -= 5
+        
+        // Draw cactus
+        ctx.fillStyle = darkMode ? '#9ca3af' : '#4b5563'
+        ctx.fillRect(cactus.x, cactus.y, cactus.width, cactus.height)
 
-      for (const cactusItem of cacti) {
+        // Check collision
         if (
-          dino.x < cactusItem.x + cactusItem.width &&
-          dino.x + dino.width > cactusItem.x &&
-          dino.y < cactusItem.y + cactusItem.height &&
-          dino.y + dino.height > cactusItem.y
+          dino.x < cactus.x + cactus.width &&
+          dino.x + dino.width > cactus.x &&
+          dino.y < cactus.y + cactus.height &&
+          dino.y + dino.height > cactus.y
         ) {
           setGameStarted(false)
           if (currentScore > highScore) {
             setHighScore(currentScore)
             localStorage.setItem('dinoHighScore', currentScore.toString())
           }
-          return
+          return false
         }
-      }
 
-      // Set dino and cactus color based on dark mode
+        return cactus.x > -CACTUS_WIDTH
+      })
+
+      // Draw dino
       ctx.fillStyle = darkMode ? '#34d399' : '#10b981'
       ctx.fillRect(dino.x, dino.y, dino.width, dino.height)
-
-      ctx.fillStyle = darkMode ? '#9ca3af' : '#4b5563'
-      for (const cactus of cacti) {
-        ctx.fillRect(cactus.x, cactus.y, cactus.width, cactus.height)
-      }
 
       // Draw ground
       ctx.strokeStyle = darkMode ? '#4b5563' : '#9ca3af'

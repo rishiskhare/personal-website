@@ -58,7 +58,7 @@ export default function Education({ darkMode }: EducationProps) {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="text-sm sm:text-base"
         >
-          Efficient Algorithms & Intractable Problems, Data Structures, Machine Learning, Computer Security, Database Systems, Operating Systems, Computer Architecture, Discrete Math & Probability, Principles of Data Science, Computer Graphics
+          Efficient Algorithms & Intractable Problems, Data Structures, Machine Learning, Computer Security, Database Systems, Operating Systems, Computer Architecture, Discrete Math & Probability, Principles of Data Science, Computer Graphics, Deep Neural Networks
         </motion.p>
       </motion.div>
     </ScrollArea>
