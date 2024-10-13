@@ -33,7 +33,7 @@ export default function Chatbot({ darkMode, setShowBrookeDialog }: ChatbotProps)
     let response: string[] = []
     switch (command) {
       case "help":
-        response = ["Available commands:", "- about: Learn about Rishi Khare", "- education: View educational background", "- inventions: List current inventions", "- contact: Show contact information", "- clear: Clear the chat", "- brooke: A special surprise"]
+        response = ["Available commands:", "- about: Learn about Rishi Khare", "- education: View educational background", "- inventions: List current inventions", "- contact: Show contact information", "- clear: Clear the chat"]
         break
       case "about":
         response = ["Rishi Khare: Inventor, AI Researcher, and Computer Scientist", "Currently pushing the boundaries of AI and machine learning at UC Berkeley."]
