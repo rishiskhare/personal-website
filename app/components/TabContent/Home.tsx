@@ -57,7 +57,7 @@ export default function Home({ darkMode, animatedText, handleTabChange, setShowD
               <SelectItem value="experience">Experience</SelectItem>
               <SelectItem value="projects">Projects</SelectItem>
               <SelectItem value="chatbot">AI Chatbot</SelectItem>
-              <SelectItem value="game">I'm feeling inventive</SelectItem>
+              <SelectItem value="game">I&apos;m feeling inventive</SelectItem>
             </SelectContent>
           </Select>
         </motion.div>
@@ -74,25 +74,25 @@ export default function Home({ darkMode, animatedText, handleTabChange, setShowD
             My goal is to develop innovative solutions that can positively impact the world.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="https://github.com/rishiskhare" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/rishiskhare" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <Button variant="outline" className="flex items-center gap-2">
                 <Github className="h-5 w-5" />
                 <span>GitHub</span>
               </Button>
             </a>
-            <a href="https://linkedin.com/in/rishi-khare" target="_blank" rel="noopener noreferrer">
+            <a href="https://linkedin.com/in/rishi-khare" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <Button variant="outline" className="flex items-center gap-2">
                 <Linkedin className="h-5 w-5" />
                 <span>LinkedIn</span>
               </Button>
             </a>
-            <a href="https://x.com/rishiskhare" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/rishiskhare" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <Button variant="outline" className="flex items-center gap-2">
                 <Twitter className="h-5 w-5" />
                 <span>X</span>
               </Button>
             </a>
-            <a href="mailto:rishi.khare@berkeley.edu">
+            <a href="mailto:rishi.khare@berkeley.edu" className="flex items-center">
               <Button variant="outline" className="flex items-center gap-2">
                 <Mail className="h-5 w-5" />
                 <span>Email</span>
