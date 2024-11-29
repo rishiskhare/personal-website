@@ -77,6 +77,10 @@ export default function DinoGame({ darkMode }: DinoGameProps) {
         jumpVelocity = 0
       }
 
+      // Increment score first
+      currentScore++
+      setScore(currentScore)
+
       // Generate new cactus
       if (frameCount % 100 === 0) {
         cacti.push({
@@ -124,9 +128,6 @@ export default function DinoGame({ darkMode }: DinoGameProps) {
       ctx.moveTo(0, GAME_HEIGHT - 1)
       ctx.lineTo(GAME_WIDTH, GAME_HEIGHT - 1)
       ctx.stroke()
-
-      currentScore++
-      setScore(currentScore)
 
       frameCount++
       animationFrameId = requestAnimationFrame(gameLoop)

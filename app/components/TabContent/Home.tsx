@@ -69,8 +69,8 @@ export default function Home({ darkMode, animatedText, handleTabChange, setShowD
         >
           <h2 className="text-xl sm:text-2xl font-bold mb-4">About Me</h2>
           <p className="text-center max-w-2xl mb-6 text-sm sm:text-base">
-            I&apos;m Rishi Khare, an AI researcher and computer scientist passionate about pushing the boundaries of technology. 
-            Currently, I&apos;m studying Computer Science and Data Science at UC Berkeley, where I&apos;m involved in cutting-edge AI research. 
+            I&apos;m Rishi, a researcher and computer scientist passionate about trustworthy and safe AI. 
+            Currently, I&apos;m studying Computer Science and Data Science at UC Berkeley, where I engage in secure AI research at Berkeley AI Research (BAIR) and build AI systems with T-Mobile's Advanced Technology and Innovation Lab. 
             My goal is to develop innovative solutions that can positively impact the world.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
